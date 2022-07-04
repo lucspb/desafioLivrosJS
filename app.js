@@ -26,31 +26,35 @@ let booksBox = {
   const getPluralOrSingular = (quantity, singular, plural) => 
     quantity === 1 ? singular : plural
 
+  const getAvaliableSpacesMessage = (spaces, booksIn) => {
+    const availableSpaces = spaces - booksIn
+      const fitPluralOrSingular = 
+        getPluralOrSingular(availableSpaces, 'cabe', 'cabem')
+      const bookPluralOrSingular = 
+        getPluralOrSingular(availableSpaces, 'livro', 'livros')
+      return `Só ${fitPluralOrSingular} mais ${availableSpaces} ${bookPluralOrSingular}`
+  }
+
   addBoxs = booksQuantity => { 
-    let {booksIn, spaces} = booksBox // não é necessário colocar o booksBox na frente do booksIn e spaces por conta deste código
-    const isBoxFilled = booksIn === spaces
-    const boxSpacesAreNotEnough = booksIn + booksQuantity > spaces
+    const {spaces} = booksBox // não é necessário colocar o booksBox na frente do spaces por conta deste código
+    const isBoxFilled = booksBox.booksIn === spaces
+    const boxSpacesAreNotEnough = booksBox.booksIn + booksQuantity > spaces
 
     if(isBoxFilled){
       return "A caixa já está cheia"
     }
 
     if(boxSpacesAreNotEnough){
-      const availableSpaces = spaces - booksIn
-      const fitPluralOrSingular = 
-        getPluralOrSingular(availableSpaces, 'cabe', 'cabem')
-      const bookPluralOrSingular = 
-        getPluralOrSingular(availableSpaces, 'livro', 'livros')
-      return `Só ${fitPluralOrSingular} mais ${availableSpaces} ${bookPluralOrSingular}`
+      return getAvaliableSpacesMessage(spaces, booksBox.booksIn)
     }
 
-    booksIn += booksQuantity;
-    const bookPluralOrSingular = getPluralOrSingular(booksIn, 'livro', 'livros')
-    return `Já há ${booksIn} ${bookPluralOrSingular} na caixa`
+    booksBox.booksIn += booksQuantity;
+    const bookPluralOrSingular = getPluralOrSingular(booksBox.booksIn, 'livro', 'livros')
+    return `Já há ${booksBox.booksIn} ${bookPluralOrSingular} na caixa`
   }
   
   // console.log(addBoxs(4))
-  // console.log(addBoxs(3))
-  // console.log(addBoxs(3))
-  console.log(addBoxs(1))
+  // console.log(addBoxs(1))
+  console.log(addBoxs(4))
+  console.log(addBoxs(3))
   console.log(booksBox)
