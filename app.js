@@ -22,3 +22,35 @@ let booksBox = {
     spaces: 5,
     booksIn: 0
   }
+
+  const getPluralOrSingular = (quantity, singular, plural) => 
+    quantity === 1 ? singular : plural
+
+  addBoxs = booksQuantity => { 
+    let {booksIn, spaces} = booksBox // não é necessário colocar o booksBox na frente do booksIn e spaces por conta deste código
+    const isBoxFilled = booksIn === spaces
+    const boxSpacesAreNotEnough = booksIn + booksQuantity > spaces
+
+    if(isBoxFilled){
+      return "A caixa já está cheia"
+    }
+
+    if(boxSpacesAreNotEnough){
+      const availableSpaces = spaces - booksIn
+      const fitPluralOrSingular = 
+        getPluralOrSingular(availableSpaces, 'cabe', 'cabem')
+      const bookPluralOrSingular = 
+        getPluralOrSingular(availableSpaces, 'livro', 'livros')
+      return `Só ${fitPluralOrSingular} mais ${availableSpaces} ${bookPluralOrSingular}`
+    }
+
+    booksIn += booksQuantity;
+    const bookPluralOrSingular = getPluralOrSingular(booksIn, 'livro', 'livros')
+    return `Já há ${booksIn} ${bookPluralOrSingular} na caixa`
+  }
+  
+  // console.log(addBoxs(4))
+  // console.log(addBoxs(3))
+  // console.log(addBoxs(3))
+  console.log(addBoxs(1))
+  console.log(booksBox)
